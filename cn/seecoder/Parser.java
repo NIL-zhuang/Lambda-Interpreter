@@ -1,10 +1,19 @@
 package cn.seecoder;
 
 public class Parser {
-    public Parser(Lexer l){
+    Lexer lexer;
+    Term term;
 
+    public Parser(Lexer lexer) {
+        this.lexer = lexer;
     }
-    public AST parse(){
+
+    Term Parse() {
+        this.lexer.match(TokenType.EOF);
+        return this.term;
+    }
+
+    public AST parse() {
         return null;
     }
 }

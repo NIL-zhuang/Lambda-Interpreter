@@ -1,3 +1,3 @@
 package cn.seecoder;
 
-enum TokenType {LPAREN, RPAREN, LAMBDA, DOT, LCID}
+enum TokenType {LPAREN, RPAREN, LAMBDA, DOT, LCID, EOF, UNDEFINED}
