@@ -1,7 +1,7 @@
 package cn.seecoder;
 
-public class AST {
-
+public abstract class AST {
+    public abstract String toString();
 }
 
 

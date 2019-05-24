@@ -2,9 +2,9 @@ package cn.seecoder;
 
 public class Lexer {
 
-    private String source;
-    private int index;
-    private Token token;
+    String source;
+    int index;
+    Token token;
 
 
     /**
@@ -41,24 +41,29 @@ public class Lexer {
         //判断token类型
         switch (temp) {
             case '\\':
-                this.token = new Token(TokenType.LAMBDA, temp);
+                this.token = new Token(TokenType.LAMBDA, String.valueOf(temp));
                 break;
             case '.':
-                this.token = new Token(TokenType.DOT, temp);
+                this.token = new Token(TokenType.DOT, String.valueOf(temp));
                 break;
             case '(':
-                this.token = new Token(TokenType.LPAREN, temp);
+                this.token = new Token(TokenType.LPAREN, String.valueOf(temp));
                 break;
             case ')':
-                this.token = new Token(TokenType.RPAREN, temp);
+                this.token = new Token(TokenType.RPAREN, String.valueOf(temp));
                 break;
             case '#':
-                this.token = new Token(TokenType.EOF, temp);
+                this.token = new Token(TokenType.EOF, String.valueOf(temp));
                 break;
             default:
                 if ('a' <= temp && 'z' >= temp || 'A' <= temp && 'Z' >= temp) {
-                    //避免value是一个字符串的情况
-                    this.token = new Token(TokenType.LCID, temp);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    //处理value是一个字符串的情况
+                    while ('a' <= temp && 'z' >= temp || 'A' <= temp && 'Z' >= temp) {
+                        stringBuilder.append(temp);
+                        temp = this.nextChar();
+                    }
+                    this.token = new Token(TokenType.LCID, stringBuilder.toString());
                     break;
                 } else {
                     throw new Error("Unexpected token");
@@ -80,24 +85,20 @@ public class Lexer {
         return false;
     }
 
-    public void match(TokenType type) {
+    public boolean match(TokenType type) {
         if (this.next(type)) {
             this.nextToken();
-            return;
+            return true;
         }
-        throw new Error("Parse Error");
+        return false;
     }
 
-    public char token(TokenType type) {
+    public String token(TokenType type) {
         if (!next(type)) {
             return this.token.value;
         }
         token = this.token;
         this.match(type);
         return token.value;
-    }
-
-    private boolean isEnglish(char c) {
-        return ('a' < c && 'z' > c || 'A' < c && 'Z' > c);
     }
 }
