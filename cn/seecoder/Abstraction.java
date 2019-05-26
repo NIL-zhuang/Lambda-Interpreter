@@ -2,7 +2,7 @@ package cn.seecoder;
 
 import java.util.ArrayList;
 
-public class Abstraction {
+public class Abstraction extends AST{
     String param;
     AST body;
 

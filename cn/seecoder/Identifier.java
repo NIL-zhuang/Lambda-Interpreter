@@ -2,7 +2,7 @@ package cn.seecoder;
 
 import java.util.ArrayList;
 
-public class Identifier extends Term {
+public class Identifier extends AST {
     String value;
 
     Identifier(String value) {

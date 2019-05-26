@@ -1,15 +1,17 @@
 package cn.seecoder;
 
-public class Application extends Term {
+public class Application extends AST {
     String param;
-    AST ast;
+    AST body;
+    AST lhs;
+    AST rhs;
 
-    Application(String param, AST ast) {
-        this.param = param;
-        this.ast = ast;
+    Application(AST lhs, AST rhs) {
+        this.lhs = lhs;
+        this.rhs = rhs;
     }
 
-    public void appPrint() {
-
+    public String toString() {
+        return null;
     }
 }

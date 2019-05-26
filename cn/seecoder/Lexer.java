@@ -63,13 +63,14 @@ public class Lexer {
                         stringBuilder.append(temp);
                         temp = this.nextChar();
                     }
+                    this.index--;
+                    //put back the last char if it isn't part of the identifier
                     this.token = new Token(TokenType.LCID, stringBuilder.toString());
                     break;
                 } else {
                     throw new Error("Unexpected token");
                 }
         }
-        System.out.println(this.token.tokenType + " " + this.token.value + " " + this.index);
         return token;
     }
 
@@ -93,12 +94,19 @@ public class Lexer {
         return false;
     }
 
-    public String token(TokenType type) {
-        if (!next(type)) {
-            return this.token.value;
+    public Token token(TokenType type) {
+        if (next(type)) {
+            return this.token;
+        } else {
+            throw new Error("wrong");
         }
-        token = this.token;
-        this.match(type);
-        return token.value;
+    }
+
+    public static void main(String[] args) {
+        String source = "(\\x.\\y.x)(\\x.x)(\\y.y)";
+        Lexer lexer = new Lexer(source);
+        while (!lexer.token.value.equals("#")) {
+            lexer.nextToken();
+        }
     }
 }
