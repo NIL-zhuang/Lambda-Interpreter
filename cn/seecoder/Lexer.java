@@ -62,6 +62,9 @@ public class Lexer {
                     while ('a' <= temp && 'z' >= temp || 'A' <= temp && 'Z' >= temp) {
                         stringBuilder.append(temp);
                         temp = this.nextChar();
+                        if (temp == '#') {
+                            return new Token("#");
+                        }
                     }
                     this.index--;
                     //put back the last char if it isn't part of the identifier
@@ -71,6 +74,7 @@ public class Lexer {
                     throw new Error("Unexpected token");
                 }
         }
+        System.out.println(this.token.tokenType);
         return token;
     }
 

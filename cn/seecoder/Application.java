@@ -1,8 +1,6 @@
 package cn.seecoder;
 
 public class Application extends AST {
-    String param;
-    AST body;
     AST lhs;
     AST rhs;
 
@@ -12,6 +10,10 @@ public class Application extends AST {
     }
 
     public String toString() {
-        return null;
+        if (lhs == null) {
+            return (rhs == null) ? null : "(" + rhs.toString() + ")";
+        } else {
+            return (rhs == null) ? "(" + lhs.toString() + ")" : "(" + (lhs.toString() + " " + rhs.toString()) + ")";
+        }
     }
 }
