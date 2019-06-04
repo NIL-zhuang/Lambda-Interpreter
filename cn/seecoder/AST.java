@@ -15,11 +15,11 @@ public abstract class AST {
                 System.out.print("--");
             }
             if (root instanceof Application) {
-                System.out.println("Application");
+                System.out.println("Application " + ((Application) root).lhs.toString() + " " + ((Application) root).rhs.toString());
             } else if (root instanceof Identifier) {
-                System.out.println("Identifier");
+                System.out.println("Identifier " + ((Identifier) root).value);
             } else if (root instanceof Abstraction) {
-                System.out.println("Abstraction");
+                System.out.println("Abstraction \\" + ((Abstraction) root).param.toString() + "." + ((Abstraction) root).body.toString());
             }
             if (root instanceof Application) {
                 printTree(((Application) root).lhs, depth + 1);

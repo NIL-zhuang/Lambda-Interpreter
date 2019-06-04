@@ -1,5 +1,6 @@
 package cn.seecoder;
 
+
 public class Interpreter {
     Parser parser;
     AST astAfterParser;
@@ -8,18 +9,6 @@ public class Interpreter {
         this.parser = parser;
         astAfterParser = parser.parse();
         //System.out.println("After parser:"+astAfterParser.toString());
-    }
-
-    private boolean isAbstraction(AST ast) {
-        return ast instanceof Abstraction;
-    }
-
-    private boolean isApplication(AST ast) {
-        return ast instanceof Application;
-    }
-
-    private boolean isIdentifier(AST ast) {
-        return ast instanceof Identifier;
     }
 
     private static boolean isValue(AST ast) {
@@ -32,34 +21,37 @@ public class Interpreter {
 
     private AST evalAST(AST ast) {
         while (true) {
+//            ast.printTree(ast, ast.depth);
+//            System.out.println();
             if (ast instanceof Application) {
-                if (isValue(((Application) ast).lhs) && isValue(((Application) ast).rhs)) {
-                    /*
-                     * if both sides of the application are values
-                     * we can proceed and substitute the rhs with the abstraction's parameter in the body
-                     */
-                    ast = substitute(((Application) ast).lhs, ((Application) ast).rhs);
-                } else if (isValue(((Application) ast).lhs)) {
-                    /*
-                     * in that the left part is already value
-                     * we should only evaluate rhs
-                     */
-                    ((Application) ast).rhs = evalAST(((Application) ast).rhs);
-                } else {
-                    /*
-                     * left part isn't a value
-                     * keep reducing it
-                     */
+                if (((Application) ast).lhs instanceof Application) {
                     ((Application) ast).lhs = evalAST(((Application) ast).lhs);
+                    if (((Application) ast).lhs instanceof Application) {
+                        return ast;
+                    }
+                } else if (((Application) ast).lhs instanceof Abstraction) {
+                    if (((Application) ast).rhs instanceof Application) {
+                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
+                    }
+                    ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
+                } else {
+                    if (((Application) ast).rhs instanceof Application || ((Application) ast).rhs instanceof Abstraction) {
+                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
+                        return ast;
+                    } else {
+                        return ast;
+                    }
                 }
-            } else if (isValue(ast)) {
-                /*
-                 * congratulations! you've reached an end
-                 */
+            } else if (ast instanceof Abstraction) {
+                Abstraction abs = (Abstraction) ast;
+                abs.body = evalAST(abs.body);
+                return ast;
+            } else if (ast instanceof Identifier) {
                 return ast;
             }
         }
     }
+
 
     private AST substitute(AST node, AST value) {
         return shift(-1, subst(node, shift(1, value, 0), 0), 0);
@@ -77,16 +69,22 @@ public class Interpreter {
      * @return AST
      */
     private AST subst(AST node, AST value, int depth) {
-        if (isApplication(node)) {
-            return new Application(subst(((Application) node).lhs, value, depth), subst(((Application) node).rhs, value, depth));
-        } else if (isAbstraction(node)) {
-            return new Abstraction(((Abstraction) node).param, subst(((Abstraction) node).body, value, depth));
-        } else if (isIdentifier(node)) {
-            if (Integer.toString(depth).equals(((Identifier) node).value)) {
-                return shift(depth, value, 0);
-            } else {
-                return node;
-            }
+        node.printTree(node, node.depth);
+        if (node instanceof Application) {
+            //左右两枝都替换
+            return new Application(
+                    subst(((Application) node).lhs, value, depth),
+                    subst(((Application) node).rhs, value, depth)
+            );
+        } else if (node instanceof Abstraction) {
+            //保留abs的参数，替入node.body时深度+1
+            return new Abstraction(
+                    ((Abstraction) node).param,
+                    subst(((Abstraction) node).body, value, depth + 1)
+            );
+        } else if (node instanceof Identifier) {
+            //深度相等则替换，不等不替换
+            return Integer.toString(depth).equals(((Identifier) node).value) ? shift(depth, value, 0) : node;
         }
         return null;
     }
@@ -95,23 +93,33 @@ public class Interpreter {
      * De Bruijn index值位移
      * 如果节点是Applation，分别对左右树位移；
      * 如果node节点是abstraction，新的body等于旧node.body位移by（from得+1）；
-     * 如果node是identifier，则新的identifier的De Bruijn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
-     * <p>
-     *    *@param by 位移的距离
+     * 如果node是identifier，则新的identifier的De Brujjn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
      *
+     * @param by   位移的距离
      * @param node 位移的节点
-     * @param from 内层的深度
-     *             <p>
-     *                      
+     * @param from 内层的深度，也就是要替换的节点所对应的De Burjin index值
      * @return AST
-     * @throws  (方法有异常的话加)
      */
     private static AST shift(int by, AST node, int from) {
+        node.printTree(node, node.depth);
+        System.out.println();
         if (node instanceof Application) {
-            return new Application(shift(by, ((Application) node).lhs, from), shift(by, ((Application) node).rhs, from));
-        } else if (node instanceof Abstraction) {
-            return new Abstraction((Identifier) ((Abstraction) node).param, shift(by, (((Abstraction) node).body), from + 1));
-        } else if (node instanceof Identifier) {
+            System.out.println("Application");
+            //分别左右树位移
+            return new Application(
+                    shift(by, ((Application) node).lhs, from),
+                    shift(by, ((Application) node).rhs, from)
+            );
+        }// 新的body等于旧node.body位移by（from得+1）
+        else if (node instanceof Abstraction) {
+            System.out.println("Abstraction");
+            return new Abstraction(
+                    ((Abstraction) node).param,
+                    shift(by, ((Abstraction) node).body, from + 1)
+            );
+        } //新的identifier的De Brujjn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
+        else if (node instanceof Identifier) {
+            System.out.println("Identifier");
             int val = Integer.valueOf(((Identifier) node).value);
             if (val < from) {
                 return new Identifier(String.valueOf(val));
@@ -194,19 +202,14 @@ public class Interpreter {
                 app(MIN, FOUR, TWO),//31
         };
 
-//        for (int i = 0; i < sources.length; i++) {
-//            String source = sources[i];
-//            System.out.println(i + ":" + source);
-//            Lexer lexer = new Lexer(source);
-//            Parser parser = new Parser(lexer);
-//            Interpreter interpreter = new Interpreter(parser);
-//            AST result = interpreter.eval();
-//            System.out.println(i + ":" + result.toString());
-//        }
-        String source = sources[1];
-        Lexer lexer = new Lexer(source);
-        Parser parser = new Parser(lexer);
-        Interpreter interpreter = new Interpreter(parser);
-        AST result = interpreter.eval();
+        for (int i = 0; i < sources.length; i++) {
+            String source = sources[i];
+            System.out.println(i + ":" + source);
+            Lexer lexer = new Lexer(source);
+            Parser parser = new Parser(lexer);
+            Interpreter interpreter = new Interpreter(parser);
+            AST result = interpreter.eval();
+            System.out.println(i + ":" + result.toString());
+        }
     }
 }

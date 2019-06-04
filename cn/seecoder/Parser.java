@@ -77,7 +77,7 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        String source = "\\p.\\a.\\b.p a b";
+        String source = "(((\\x.x)(\\y.y))(\\z.z))";
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         AST ast = parser.parse();
