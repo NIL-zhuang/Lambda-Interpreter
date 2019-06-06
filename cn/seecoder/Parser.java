@@ -69,7 +69,6 @@ public class Parser {
         } else if (this.lexer.next(TokenType.LCID)) {
             // it is an LCID
             param = String.valueOf(ctx.indexOf(lexer.token.value));
-//            System.out.println(param);
             lexer.match(TokenType.LCID);
             return new Identifier(String.valueOf(ctx.indexOf(param)), param);
         }
@@ -77,7 +76,7 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        String source = "(((\\x.x)(\\y.y))(\\z.z))";
+        String source = "((\\n.\\f.\\x.f (n f x))(\\f.\\x.x))";
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         AST ast = parser.parse();

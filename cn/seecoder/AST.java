@@ -9,23 +9,25 @@ public abstract class AST {
 
     public abstract String toString();
 
+    public abstract String toStr();
+
     public void printTree(AST root, int depth) {
         if (root != null) {
             for (int i = 0; i < depth; i++) {
                 System.out.print("--");
             }
             if (root instanceof Application) {
-                System.out.println("Application " + ((Application) root).lhs.toString() + " " + ((Application) root).rhs.toString());
+                System.out.println("Application (" + ((Application) root).lhs.toStr() + ")(" + ((Application) root).rhs.toStr() + ")");
             } else if (root instanceof Identifier) {
-                System.out.println("Identifier " + ((Identifier) root).value);
+                System.out.println("Identifier " + root.toStr());
             } else if (root instanceof Abstraction) {
-                System.out.println("Abstraction \\" + ((Abstraction) root).param.toString() + "." + ((Abstraction) root).body.toString());
+                System.out.println("Abstraction" + root.toStr());
             }
             if (root instanceof Application) {
                 printTree(((Application) root).lhs, depth + 1);
                 printTree(((Application) root).rhs, depth + 1);
-            } else {
-                root.toString();
+            } else if (root instanceof Abstraction) {
+                printTree(((Abstraction) root).body, depth + 1);
             }
         }
     }

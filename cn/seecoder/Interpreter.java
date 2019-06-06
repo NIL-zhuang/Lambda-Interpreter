@@ -11,40 +11,39 @@ public class Interpreter {
         //System.out.println("After parser:"+astAfterParser.toString());
     }
 
-    private static boolean isValue(AST ast) {
-        return ast instanceof Abstraction;
-    }
-
     public AST eval() {
         return evalAST(astAfterParser);
     }
 
+    private boolean isValue(AST ast) {
+        return !(ast instanceof Application);
+    }
+
     private AST evalAST(AST ast) {
         while (true) {
-//            ast.printTree(ast, ast.depth);
-//            System.out.println();
+            ast.printTree(ast, ast.depth);
+            System.out.println();
             if (ast instanceof Application) {
-                if (((Application) ast).lhs instanceof Application) {
-                    ((Application) ast).lhs = evalAST(((Application) ast).lhs);
-                    if (((Application) ast).lhs instanceof Application) {
-                        return ast;
-                    }
-                } else if (((Application) ast).lhs instanceof Abstraction) {
+                if (((Application) ast).lhs instanceof Abstraction) {
                     if (((Application) ast).rhs instanceof Application) {
                         ((Application) ast).rhs = evalAST(((Application) ast).rhs);
                     }
                     ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
+                } else if (((Application) ast).lhs instanceof Application) {
+                    ((Application) ast).lhs = evalAST(((Application) ast).lhs);
+                    if (((Application) ast).lhs instanceof Application) {
+                        return ast;
+                    }
                 } else {
-                    if (((Application) ast).rhs instanceof Application || ((Application) ast).rhs instanceof Abstraction) {
-                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
+                    if (((Application) ast).rhs instanceof Identifier) {
                         return ast;
                     } else {
+                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
                         return ast;
                     }
                 }
             } else if (ast instanceof Abstraction) {
-                Abstraction abs = (Abstraction) ast;
-                abs.body = evalAST(abs.body);
+                ((Abstraction) ast).body = evalAST(((Abstraction) ast).body);
                 return ast;
             } else if (ast instanceof Identifier) {
                 return ast;
@@ -69,7 +68,6 @@ public class Interpreter {
      * @return AST
      */
     private AST subst(AST node, AST value, int depth) {
-        node.printTree(node, node.depth);
         if (node instanceof Application) {
             //左右两枝都替换
             return new Application(
@@ -101,10 +99,7 @@ public class Interpreter {
      * @return AST
      */
     private static AST shift(int by, AST node, int from) {
-        node.printTree(node, node.depth);
-        System.out.println();
         if (node instanceof Application) {
-            System.out.println("Application");
             //分别左右树位移
             return new Application(
                     shift(by, ((Application) node).lhs, from),
@@ -112,14 +107,12 @@ public class Interpreter {
             );
         }// 新的body等于旧node.body位移by（from得+1）
         else if (node instanceof Abstraction) {
-            System.out.println("Abstraction");
             return new Abstraction(
                     ((Abstraction) node).param,
                     shift(by, ((Abstraction) node).body, from + 1)
             );
         } //新的identifier的De Brujjn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
         else if (node instanceof Identifier) {
-            System.out.println("Identifier");
             int val = Integer.valueOf(((Identifier) node).value);
             if (val < from) {
                 return new Identifier(String.valueOf(val));
@@ -202,14 +195,21 @@ public class Interpreter {
                 app(MIN, FOUR, TWO),//31
         };
 
-        for (int i = 0; i < sources.length; i++) {
-            String source = sources[i];
-            System.out.println(i + ":" + source);
-            Lexer lexer = new Lexer(source);
-            Parser parser = new Parser(lexer);
-            Interpreter interpreter = new Interpreter(parser);
-            AST result = interpreter.eval();
-            System.out.println(i + ":" + result.toString());
-        }
+//        for (int i = 0; i < sources.length; i++) {
+//            String source = sources[i];
+//            System.out.println(i + ":" + source);
+//            Lexer lexer = new Lexer(source);
+//            Parser parser = new Parser(lexer);
+//            Interpreter interpreter = new Interpreter(parser);
+//            AST result = interpreter.eval();
+//            System.out.println(i + ":" + result.toString());
+//        }
+        String source = sources[1];
+        System.out.println(sources[1]);
+        Lexer lexer = new Lexer(source);
+        Parser parser = new Parser(lexer);
+        Interpreter interpreter = new Interpreter(parser);
+        AST result = interpreter.eval();
+        System.out.println(result.toString());
     }
 }

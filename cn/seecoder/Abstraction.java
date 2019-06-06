@@ -14,4 +14,8 @@ public class Abstraction extends AST {
     public String toString() {
         return "\\" + "." + this.body.toString();
     }
+
+    public String toStr() {
+        return "\\" + param + "." + body.toStr();
+    }
 }

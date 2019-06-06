@@ -16,4 +16,12 @@ public class Application extends AST {
             return (rhs == null) ? "(" + lhs.toString() + ")" : "(" + (lhs.toString() + " " + rhs.toString()) + ")";
         }
     }
+
+    public String toStr() {
+        if (lhs == null) {
+            return (rhs == null) ? null : "(" + rhs.toStr() + ")";
+        } else {
+            return (rhs == null) ? "(" + lhs.toStr() + ")" : "(" + (lhs.toStr() + " " + rhs.toStr()) + ")";
+        }
+    }
 }
