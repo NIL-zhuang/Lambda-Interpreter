@@ -11,8 +11,9 @@ public class Identifier extends AST {
     }
 
     Identifier(String name, String value) {
-        this.value = value;
         this.name = name;
+        this.value = value;
+
     }
 
 
@@ -21,6 +22,6 @@ public class Identifier extends AST {
     }
 
     public String toStr() {
-        return this.value;
+        return this.name;
     }
 }

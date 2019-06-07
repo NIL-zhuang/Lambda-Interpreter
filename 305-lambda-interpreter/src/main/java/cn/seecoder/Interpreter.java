@@ -1,6 +1,8 @@
 package cn.seecoder;
 
 
+import java.util.Scanner;
+
 public class Interpreter {
     Parser parser;
     AST astAfterParser;
@@ -13,10 +15,6 @@ public class Interpreter {
 
     public AST eval() {
         return evalAST(astAfterParser);
-    }
-
-    private boolean isValue(AST ast) {
-        return !(ast instanceof Application);
     }
 
     /**
@@ -32,8 +30,8 @@ public class Interpreter {
      */
     private AST evalAST(AST ast) {
         while (true) {
-            ast.printTree(ast, ast.depth);
-            System.out.println();
+//            ast.printTree(ast, ast.depth);
+//            System.out.println();
             if (ast instanceof Application) {
                 if (((Application) ast).lhs instanceof Abstraction) {
                     if (((Application) ast).rhs instanceof Application) {
@@ -133,9 +131,9 @@ public class Interpreter {
         else if (node instanceof Identifier) {
             int val = Integer.valueOf(((Identifier) node).value);
             if (val < from) {
-                return new Identifier(String.valueOf(val));
+                return new Identifier(((Identifier) node).name, String.valueOf(val));
             } else {
-                return new Identifier(String.valueOf(val + by));
+                return new Identifier(((Identifier) node).name, String.valueOf(val + by));
             }
         }
         return null;
@@ -222,12 +220,20 @@ public class Interpreter {
 //            AST result = interpreter.eval();
 //            System.out.println(i + ":" + result.toString());
 //        }
-        String source = sources[1];
-        System.out.println(sources[1]);
+        System.out.println("Select a test case by input its index, ranging from 0 - 31");
+        Scanner scan = new Scanner(System.in);
+        int index = scan.nextInt();
+        String source = sources[index];
+        System.out.println("You've chosen NO." + index + " :" + source + "\nIf you want to see De Bruij in value, input 1, only normal version, input 2");
+        int flag = scan.nextInt();
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         Interpreter interpreter = new Interpreter(parser);
         AST result = interpreter.eval();
-        System.out.println(result.toString());
+        if (flag == 1) {
+            System.out.println(result.toString());
+        } else if (flag == 2) {
+            System.out.println(result.toStr());
+        }
     }
 }

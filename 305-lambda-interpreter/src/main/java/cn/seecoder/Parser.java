@@ -28,7 +28,7 @@ public class Parser {
                     ctx.add(0, param);
                     AST aTerm = term(ctx);
                     ctx.remove(ctx.indexOf(param));
-                    return new Abstraction(new Identifier(Integer.toString(ctx.indexOf(param)), param), aTerm);
+                    return new Abstraction(new Identifier(param, param), aTerm);
                 }
             }
         } else {
@@ -68,9 +68,9 @@ public class Parser {
             }
         } else if (this.lexer.next(TokenType.LCID)) {
             // it is an LCID
-            param = String.valueOf(ctx.indexOf(lexer.token.value));
+            param = lexer.token.value;
             lexer.match(TokenType.LCID);
-            return new Identifier(String.valueOf(ctx.indexOf(param)), param);
+            return new Identifier(param, String.valueOf(ctx.indexOf(param)));
         }
         return null;
     }
