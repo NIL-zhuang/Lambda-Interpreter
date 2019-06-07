@@ -19,6 +19,17 @@ public class Interpreter {
         return !(ast instanceof Application);
     }
 
+    /**
+     * 首先检测其是否为 application，如果是，则对其求值：
+     * 1. 若 abstraction 的两侧都是值，只要将所有出现的 x 用给出的值替换掉；
+     * 2. 否则，若左侧为值，给右侧求值；
+     * 3. 如果上面都不行，只对左侧求值；
+     * 现在，如果下一个节点是 identifier，我们只需将它替换为它所表示的变量绑定的值。
+     * 最后，如果没有规则适用于AST，这意味着它已经是一个 value，我们将它返回。
+     *
+     * @param ast 一个根节点
+     * @return ast
+     */
     private AST evalAST(AST ast) {
         while (true) {
             ast.printTree(ast, ast.depth);
@@ -26,16 +37,21 @@ public class Interpreter {
             if (ast instanceof Application) {
                 if (((Application) ast).lhs instanceof Abstraction) {
                     if (((Application) ast).rhs instanceof Application) {
+                        //右侧不是值(application)，给右侧求值
                         ((Application) ast).rhs = evalAST(((Application) ast).rhs);
                     }
+                    //两侧都是值(abstraction)，替换掉
                     ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
                 } else if (((Application) ast).lhs instanceof Application) {
+                    //只对左侧求值
                     ((Application) ast).lhs = evalAST(((Application) ast).lhs);
                     if (((Application) ast).lhs instanceof Application) {
                         return ast;
                     }
                 } else {
+                    //左侧是identifier
                     if (((Application) ast).rhs instanceof Identifier) {
+                        //右侧也是一个值，ast是一个值，返回
                         return ast;
                     } else {
                         ((Application) ast).rhs = evalAST(((Application) ast).rhs);
@@ -43,9 +59,11 @@ public class Interpreter {
                     }
                 }
             } else if (ast instanceof Abstraction) {
+                //是abstraction后，如果body部分是value则返回，不是value则计算结果
                 ((Abstraction) ast).body = evalAST(((Abstraction) ast).body);
                 return ast;
             } else if (ast instanceof Identifier) {
+                //ast是value
                 return ast;
             }
         }
