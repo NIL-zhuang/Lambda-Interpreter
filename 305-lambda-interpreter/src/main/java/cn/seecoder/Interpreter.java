@@ -1,19 +1,14 @@
 package cn.seecoder;
 
-
-import java.util.Scanner;
-
 public class Interpreter {
-    Parser parser;
-    AST astAfterParser;
+    private AST astAfterParser;
 
     public Interpreter(Parser parser) {
-        this.parser = parser;
         astAfterParser = parser.parse();
         //System.out.println("After parser:"+astAfterParser.toString());
     }
 
-    public AST eval() {
+    AST eval() {
         return evalAST(astAfterParser);
     }
 
@@ -30,14 +25,15 @@ public class Interpreter {
      */
     private AST evalAST(AST ast) {
         while (true) {
-//            ast.printTree(ast, ast.depth);
-//            System.out.println();
+            ast.printTree(ast, ast.depth);
+            System.out.println();
             if (ast instanceof Application) {
                 if (((Application) ast).lhs instanceof Abstraction) {
                     if (((Application) ast).rhs instanceof Application) {
                         //右侧不是值(application)，给右侧求值
                         ((Application) ast).rhs = evalAST(((Application) ast).rhs);
                     }
+
                     //两侧都是值(abstraction)，替换掉
                     ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
                 } else if (((Application) ast).lhs instanceof Application) {
@@ -139,28 +135,28 @@ public class Interpreter {
         return null;
     }
 
-    static String ZERO = "(\\f.\\x.x)";
-    static String SUCC = "(\\n.\\f.\\x.f (n f x))";
-    static String ONE = app(SUCC, ZERO);
-    static String TWO = app(SUCC, ONE);
-    static String THREE = app(SUCC, TWO);
-    static String FOUR = app(SUCC, THREE);
-    static String FIVE = app(SUCC, FOUR);
-    static String PLUS = "(\\m.\\n.((m " + SUCC + ") n))";
-    static String POW = "(\\b.\\e.e b)";       // POW not ready
-    static String PRED = "(\\n.\\f.\\x.n(\\g.\\h.h(g f))(\\u.x)(\\u.u))";
-    static String SUB = "(\\m.\\n.n" + PRED + "m)";
-    static String TRUE = "(\\x.\\y.x)";
-    static String FALSE = "(\\x.\\y.y)";
-    static String AND = "(\\p.\\q.p q p)";
-    static String OR = "(\\p.\\q.p p q)";
-    static String NOT = "(\\p.\\a.\\b.p b a)";
-    static String IF = "(\\p.\\a.\\b.p a b)";
-    static String ISZERO = "(\\n.n(\\x." + FALSE + ")" + TRUE + ")";
-    static String LEQ = "(\\m.\\n." + ISZERO + "(" + SUB + "m n))";
-    static String EQ = "(\\m.\\n." + AND + "(" + LEQ + "m n)(" + LEQ + "n m))";
-    static String MAX = "(\\m.\\n." + IF + "(" + LEQ + " m n)n m)";
-    static String MIN = "(\\m.\\n." + IF + "(" + LEQ + " m n)m n)";
+    private static String ZERO = "(\\f.\\x.x)";
+    private static String SUCC = "(\\n.\\f.\\x.f (n f x))";
+    private static String ONE = app(SUCC, ZERO);
+    private static String TWO = app(SUCC, ONE);
+    private static String THREE = app(SUCC, TWO);
+    private static String FOUR = app(SUCC, THREE);
+    private static String FIVE = app(SUCC, FOUR);
+    private static String PLUS = "(\\m.\\n.((m " + SUCC + ") n))";
+    private static String POW = "(\\b.\\e.e b)";       // POW not ready
+    private static String PRED = "(\\n.\\f.\\x.n(\\g.\\h.h(g f))(\\u.x)(\\u.u))";
+    private static String SUB = "(\\m.\\n.n" + PRED + "m)";
+    private static String TRUE = "(\\x.\\y.x)";
+    private static String FALSE = "(\\x.\\y.y)";
+    private static String AND = "(\\p.\\q.p q p)";
+    private static String OR = "(\\p.\\q.p p q)";
+    private static String NOT = "(\\p.\\a.\\b.p b a)";
+    private static String IF = "(\\p.\\a.\\b.p a b)";
+    private static String ISZERO = "(\\n.n(\\x." + FALSE + ")" + TRUE + ")";
+    private static String LEQ = "(\\m.\\n." + ISZERO + "(" + SUB + "m n))";
+    private static String EQ = "(\\m.\\n." + AND + "(" + LEQ + "m n)(" + LEQ + "n m))";
+    private static String MAX = "(\\m.\\n." + IF + "(" + LEQ + " m n)n m)";
+    private static String MIN = "(\\m.\\n." + IF + "(" + LEQ + " m n)m n)";
 
     private static String app(String func, String x) {
         return "(" + func + x + ")";
@@ -220,20 +216,16 @@ public class Interpreter {
 //            AST result = interpreter.eval();
 //            System.out.println(i + ":" + result.toString());
 //        }
-        System.out.println("Select a test case by input its index, ranging from 0 - 31");
-        Scanner scan = new Scanner(System.in);
-        int index = scan.nextInt();
-        String source = sources[index];
-        System.out.println("You've chosen NO." + index + " :" + source + "\nIf you want to see De Bruij in value, input 1, only normal version, input 2");
-        int flag = scan.nextInt();
+//
+        String source = sources[1];
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         Interpreter interpreter = new Interpreter(parser);
         AST result = interpreter.eval();
-        if (flag == 1) {
-            System.out.println(result.toString());
-        } else if (flag == 2) {
-            System.out.println(result.toStr());
-        }
+//        if (flag == 1) {
+//            System.out.println(result.toString());
+//        } else if (flag == 2) {
+        System.out.println(result.toString());
+//        }
     }
 }

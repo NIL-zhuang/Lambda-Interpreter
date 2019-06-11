@@ -2,8 +2,8 @@ package cn.seecoder;
 
 public class Lexer {
 
-    String source;
-    int index;
+    private String source;
+    private int index;
     Token token;
 
 
@@ -32,7 +32,7 @@ public class Lexer {
      * set this.token on the basis of the remaining of the input
      * return a token, and set a fundamental for the helper functions
      */
-    public Token nextToken() {
+    private Token nextToken() {
         char temp = ' ';
         //跳过所有空格
         while (temp == ' ') {
@@ -78,32 +78,16 @@ public class Lexer {
         return token;
     }
 
-    public boolean next(TokenType type) {
+    boolean next(TokenType type) {
         return this.token.tokenType == type;
     }
 
-    public boolean skip(TokenType type) {
+    boolean match(TokenType type) {
         if (this.next(type)) {
             this.nextToken();
             return true;
         }
         return false;
-    }
-
-    public boolean match(TokenType type) {
-        if (this.next(type)) {
-            this.nextToken();
-            return true;
-        }
-        return false;
-    }
-
-    public Token token(TokenType type) {
-        if (next(type)) {
-            return this.token;
-        } else {
-            throw new Error("wrong");
-        }
     }
 
     public static void main(String[] args) {

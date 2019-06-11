@@ -11,7 +11,7 @@ public abstract class AST {
 
     public abstract String toStr();
 
-    public void printTree(AST root, int depth) {
+    void printTree(AST root, int depth) {
         if (root != null) {
             for (int i = 0; i < depth; i++) {
                 System.out.print("--");

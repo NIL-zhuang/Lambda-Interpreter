@@ -3,16 +3,14 @@ package cn.seecoder;
 import java.util.ArrayList;
 
 public class Parser {
-    Lexer lexer;
+    private Lexer lexer;
 
     public Parser(Lexer lexer) {
         this.lexer = lexer;
     }
 
-    public AST parse() {
-        AST ast = term(new ArrayList<>());
-//        System.out.println(lexer.match(TokenType.EOF));
-        return ast;
+    AST parse() {
+        return term(new ArrayList<>());
     }
 
     /**
@@ -20,11 +18,12 @@ public class Parser {
      */
     private AST term(ArrayList<String> ctx) {
         //check if it matches LAMBDA LCID DOT Term
-        if (this.lexer.skip(TokenType.LAMBDA)) {
+        if (this.lexer.match(TokenType.LAMBDA)) {
             if (lexer.next(TokenType.LCID)) {
                 String param = lexer.token.value;
+                //nextToken
                 lexer.match(TokenType.LCID);
-                if (lexer.skip(TokenType.DOT)) {
+                if (lexer.match(TokenType.DOT)) {
                     ctx.add(0, param);
                     AST aTerm = term(ctx);
                     ctx.remove(ctx.indexOf(param));
@@ -60,7 +59,7 @@ public class Parser {
      */
     private AST atom(ArrayList<String> ctx) {
         String param;
-        if (this.lexer.skip(TokenType.LPAREN)) {
+        if (this.lexer.match(TokenType.LPAREN)) {
             // it is a term
             AST term = term(ctx);
             if (this.lexer.match((TokenType.RPAREN))) {
@@ -76,7 +75,7 @@ public class Parser {
     }
 
     public static void main(String[] args) {
-        String source = "((\\n.\\f.\\x.f (n f x))(\\f.\\x.x))";
+        String source = "(\\x.x)(\\y.y)";
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         AST ast = parser.parse();
