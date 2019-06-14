@@ -80,6 +80,12 @@ public class Interpreter {
      * @return AST
      */
     private AST subst(AST node, AST value, int depth) {
+        System.out.println("subst----------------------------");
+        node.printTree(node, node.depth);
+        System.out.println();
+        value.printTree(value, value.depth);
+        System.out.println("conduct subst--------------------");
+        System.out.println();
         if (node instanceof Application) {
             //左右两枝都替换
             return new Application(
@@ -111,6 +117,9 @@ public class Interpreter {
      * @return AST
      */
     private static AST shift(int by, AST node, int from) {
+        System.out.println("shift ----------------");
+        node.printTree(node, node.depth);
+        System.out.println("end shift--------------- \n");
         if (node instanceof Application) {
             //分别左右树位移
             return new Application(
@@ -217,7 +226,7 @@ public class Interpreter {
 //            System.out.println(i + ":" + result.toString());
 //        }
 //
-        String source = sources[1];
+        String source = sources[5];
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         Interpreter interpreter = new Interpreter(parser);
