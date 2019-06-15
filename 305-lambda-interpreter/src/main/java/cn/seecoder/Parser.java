@@ -17,22 +17,20 @@ public class Parser {
      * Term ::= Application| LAMBDA LCID DOT Term
      */
     private AST term(ArrayList<String> ctx) {
-        //check if it matches LAMBDA LCID DOT Term
-        if (this.lexer.match(TokenType.LAMBDA)) {
+        if (this.lexer.getNextToken(TokenType.LAMBDA)) {
             if (lexer.next(TokenType.LCID)) {
-                String param = lexer.token.value;
-                //nextToken
-                lexer.match(TokenType.LCID);
-                if (lexer.match(TokenType.DOT)) {
+                String param = lexer.token.value;       //check if it matches LAMBDA LCID DOT Term
+                lexer.getNextToken(TokenType.LCID);            //nextToken
+                if (lexer.getNextToken(TokenType.DOT)) {
                     ctx.add(0, param);
                     AST aTerm = term(ctx);
+                    String valOfParam = String.valueOf(ctx.indexOf(param));        //param的层数，也就是当前的德布鲁因值
                     ctx.remove(ctx.indexOf(param));
-                    return new Abstraction(new Identifier(param, param), aTerm);
+                    return new Abstraction(new Identifier(param, valOfParam), aTerm);
                 }
             }
         } else {
-            // it is an application
-            return application(ctx);
+            return application(ctx);        // it is an application
         }
         return null;
     }
@@ -59,16 +57,14 @@ public class Parser {
      */
     private AST atom(ArrayList<String> ctx) {
         String param;
-        if (this.lexer.match(TokenType.LPAREN)) {
-            // it is a term
-            AST term = term(ctx);
-            if (this.lexer.match((TokenType.RPAREN))) {
+        if (this.lexer.getNextToken(TokenType.LPAREN)) {
+            AST term = term(ctx);                           // it is a term
+            if (this.lexer.getNextToken((TokenType.RPAREN))) {
                 return term;
             }
         } else if (this.lexer.next(TokenType.LCID)) {
-            // it is an LCID
-            param = lexer.token.value;
-            lexer.match(TokenType.LCID);
+            param = lexer.token.value;                      // it is an LCID
+            lexer.getNextToken(TokenType.LCID);
             return new Identifier(param, String.valueOf(ctx.indexOf(param)));
         }
         return null;
@@ -79,6 +75,7 @@ public class Parser {
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         AST ast = parser.parse();
+        System.out.println(ast.toString());
         ast.printTree(ast, 0);
     }
 

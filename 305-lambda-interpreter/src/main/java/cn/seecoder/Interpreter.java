@@ -13,54 +13,57 @@ public class Interpreter {
     }
 
     /**
-     * 首先检测其是否为 application，如果是，则对其求值：
-     * 1. 若 abstraction 的两侧都是值，只要将所有出现的 x 用给出的值替换掉；
+     * Identifier是值
+     * 如果是Application：若lhs是Identifier，则判断rhs；若lhs是Abstraction，那Application必然可以规约，不是值
+     * 如果是Abstraction，则根据body来判断
+     *
+     * @param ast 需要判断的AST节点
+     * @return ast是否为值
+     */
+    private boolean isValue(AST ast) {
+        if (ast instanceof Identifier) {
+            return true;
+        } else if (ast instanceof Abstraction) {
+            return isValue(((Abstraction) ast).body);
+        } else if (ast instanceof Application) {
+            if (((Application) ast).lhs instanceof Abstraction) {
+                return false;
+            } else {
+                return isValue(((Application) ast).lhs) && isValue(((Application) ast).rhs);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 首先检测其是否为 Application，如果是，则对其求值：
+     * 1. 若 Application 的两侧都是值，只要将所有出现的 x 用给出的值替换掉；
      * 2. 否则，若左侧为值，给右侧求值；
      * 3. 如果上面都不行，只对左侧求值；
-     * 现在，如果下一个节点是 identifier，我们只需将它替换为它所表示的变量绑定的值。
+     * 现在，如果下一个节点是 Identifier，我们只需将它替换为它所表示的变量绑定的值。
      * 最后，如果没有规则适用于AST，这意味着它已经是一个 value，我们将它返回。
      *
      * @param ast 一个根节点
      * @return ast
      */
     private AST evalAST(AST ast) {
-        while (true) {
-            ast.printTree(ast, ast.depth);
-            System.out.println();
+        while (!isValue(ast)) {
+//            ast.printTree(ast, ast.depth);
+//            System.out.println();
             if (ast instanceof Application) {
-                if (((Application) ast).lhs instanceof Abstraction) {
-                    if (((Application) ast).rhs instanceof Application) {
-                        //右侧不是值(application)，给右侧求值
-                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
-                    }
-
-                    //两侧都是值(abstraction)，替换掉
+                if (isValue(((Application) ast).lhs) && isValue(((Application) ast).rhs)) {
                     ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
-                } else if (((Application) ast).lhs instanceof Application) {
-                    //只对左侧求值
-                    ((Application) ast).lhs = evalAST(((Application) ast).lhs);
-                    if (((Application) ast).lhs instanceof Application) {
-                        return ast;
-                    }
+                } else if (isValue(((Application) ast).lhs)) {
+                    ((Application) ast).rhs = evalAST(((Application) ast).rhs);
                 } else {
-                    //左侧是identifier
-                    if (((Application) ast).rhs instanceof Identifier) {
-                        //右侧也是一个值，ast是一个值，返回
-                        return ast;
-                    } else {
-                        ((Application) ast).rhs = evalAST(((Application) ast).rhs);
-                        return ast;
-                    }
+                    ((Application) ast).lhs = evalAST(((Application) ast).lhs);
                 }
             } else if (ast instanceof Abstraction) {
-                //是abstraction后，如果body部分是value则返回，不是value则计算结果
-                ((Abstraction) ast).body = evalAST(((Abstraction) ast).body);
-                return ast;
-            } else if (ast instanceof Identifier) {
-                //ast是value
+                ((Abstraction) ast).body = evalAST(((Abstraction) ast).body);           //是abstraction后，如果body部分是value则返回，不是value则计算结果
                 return ast;
             }
         }
+        return ast;
     }
 
 
@@ -80,11 +83,6 @@ public class Interpreter {
      * @return AST
      */
     private AST subst(AST node, AST value, int depth) {
-        System.out.println("subst----------------------------");
-        node.printTree(node, node.depth);
-        System.out.println();
-        value.printTree(value, value.depth);
-        System.out.println("conduct subst--------------------");
         System.out.println();
         if (node instanceof Application) {
             //左右两枝都替换
@@ -117,11 +115,8 @@ public class Interpreter {
      * @return AST
      */
     private static AST shift(int by, AST node, int from) {
-        System.out.println("shift ----------------");
-        node.printTree(node, node.depth);
-        System.out.println("end shift--------------- \n");
         if (node instanceof Application) {
-            //分别左右树位移
+            //分别左右树位移，by和from的值都是原来的值
             return new Application(
                     shift(by, ((Application) node).lhs, from),
                     shift(by, ((Application) node).rhs, from)
@@ -226,15 +221,11 @@ public class Interpreter {
 //            System.out.println(i + ":" + result.toString());
 //        }
 //
-        String source = sources[5];
+        String source = SUCC + ZERO;
         Lexer lexer = new Lexer(source);
         Parser parser = new Parser(lexer);
         Interpreter interpreter = new Interpreter(parser);
         AST result = interpreter.eval();
-//        if (flag == 1) {
-//            System.out.println(result.toString());
-//        } else if (flag == 2) {
         System.out.println(result.toString());
-//        }
     }
 }

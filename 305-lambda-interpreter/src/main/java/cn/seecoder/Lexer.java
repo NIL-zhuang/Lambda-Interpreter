@@ -34,12 +34,10 @@ public class Lexer {
      */
     private Token nextToken() {
         char temp = ' ';
-        //跳过所有空格
-        while (temp == ' ') {
+        while (temp == ' ') {                //跳过所有空格
             temp = this.nextChar();
         }
-        //判断token类型
-        switch (temp) {
+        switch (temp) {                     //判断token类型
             case '\\':
                 this.token = new Token(TokenType.LAMBDA, String.valueOf(temp));
                 break;
@@ -57,8 +55,7 @@ public class Lexer {
                 break;
             default:
                 if ('a' <= temp && 'z' >= temp || 'A' <= temp && 'Z' >= temp) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    //处理value是一个字符串的情况
+                    StringBuilder stringBuilder = new StringBuilder();                      //处理value是一个字符串的情况
                     while ('a' <= temp && 'z' >= temp || 'A' <= temp && 'Z' >= temp) {
                         stringBuilder.append(temp);
                         temp = this.nextChar();
@@ -66,8 +63,7 @@ public class Lexer {
                             return new Token("#");
                         }
                     }
-                    this.index--;
-                    //put back the last char if it isn't part of the identifier
+                    this.index--;                                               //put back the last char if it isn't part of the identifier
                     this.token = new Token(TokenType.LCID, stringBuilder.toString());
                     break;
                 } else {
@@ -78,11 +74,23 @@ public class Lexer {
         return token;
     }
 
+    /**
+     * 判断是否符合期望的类型
+     *
+     * @param type 期望的token类型
+     * @return 是否符合这样的类型
+     */
     boolean next(TokenType type) {
         return this.token.tokenType == type;
     }
 
-    boolean match(TokenType type) {
+    /**
+     * 判断是否符合类型，同时token flow进到下一个
+     *
+     * @param type 期望的类型
+     * @return 是否符合这样的类型
+     */
+    boolean getNextToken(TokenType type) {
         if (this.next(type)) {
             this.nextToken();
             return true;
