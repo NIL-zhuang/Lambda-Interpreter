@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/cn/seecoder" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cn" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/305-lambda-interpreter/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/305-lambda-interpreter/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/305-lambda-interpreter" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

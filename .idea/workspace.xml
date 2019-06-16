@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffa8254f-1e1a-434c-9273-12e648f5fd11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cn/seecoder/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/cn/seecoder/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Lambda-Interpreter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Lambda-Interpreter.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/305-lambda-interpreter/src/main/java/cn/seecoder/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/305-lambda-interpreter/src/main/java/cn/seecoder/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/305-lambda-interpreter/src/test/java/cn/seecoder/InterpreterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/305-lambda-interpreter/src/test/java/cn/seecoder/InterpreterTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,23 +16,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cn/seecoder/Parser.java">
+        <entry file="file://$PROJECT_DIR$/305-lambda-interpreter/src/main/java/cn/seecoder/Interpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
-              <folding>
-                <element signature="e#261#262#0" expanded="true" />
-                <element signature="e#288#289#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cn/seecoder/Term.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+            <state relative-caret-position="1748">
+              <caret line="132" column="107" selection-start-line="132" selection-start-column="107" selection-end-line="132" selection-end-column="107" />
             </state>
           </provider>
         </entry>
@@ -43,12 +33,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/cn/seecoder/Parser.java" />
+        <option value="$PROJECT_DIR$/305-lambda-interpreter/src/main/java/cn/seecoder/Interpreter.java" />
+        <option value="$PROJECT_DIR$/305-lambda-interpreter/src/test/java/cn/seecoder/InterpreterTest.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="85" />
-    <option name="width" value="979" />
+    <option name="width" value="980" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
@@ -56,8 +48,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -65,14 +55,66 @@
               <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
               <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="seecoder" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Lambda-Interpreter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Lambda-Interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="305-lambda-interpreter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558684621453" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1560681715478" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -105,9 +147,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="0" width="783" height="840" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25241378" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12600537" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -150,6 +193,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/305-lambda-interpreter/src/test/java/cn/seecoder/InterpreterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/305-lambda-interpreter/src/main/java/cn/seecoder/Interpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1748">
+          <caret line="132" column="107" selection-start-line="132" selection-start-column="107" selection-end-line="132" selection-end-column="107" />
         </state>
       </provider>
     </entry>

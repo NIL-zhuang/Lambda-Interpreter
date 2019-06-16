@@ -130,11 +130,7 @@ public class Interpreter {
         } //新的identifier的De Brujjn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
         else if (node instanceof Identifier) {
             int val = Integer.valueOf(((Identifier) node).value);
-            if (val < from) {
-                return new Identifier(((Identifier) node).name, String.valueOf(val));
-            } else {
-                return new Identifier(((Identifier) node).name, String.valueOf(val + by));
-            }
+            return new Identifier(((Identifier) node).name, String.valueOf(val + ((val < from) ? 0 : by)));
         }
         return null;
     }
