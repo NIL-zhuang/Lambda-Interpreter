@@ -91,13 +91,14 @@ public class Interpreter {
                     subst(((Application) node).rhs, value, depth)
             );
         } else if (node instanceof Abstraction) {
-            //保留abs的参数，替入node.body时深度+1
+            //保留abs的参数，替入body时深度+1
             return new Abstraction(
                     ((Abstraction) node).param,
                     subst(((Abstraction) node).body, value, depth + 1)
             );
         } else if (node instanceof Identifier) {
             //深度相等则替换，不等不替换
+            //如果德布鲁因值相等则替换，不等就返回原node
             return Integer.toString(depth).equals(((Identifier) node).value) ? shift(depth, value, 0) : node;
         }
         return null;
@@ -115,19 +116,22 @@ public class Interpreter {
      * @return AST
      */
     private static AST shift(int by, AST node, int from) {
+        //分别左右树位移，by和from的值都是原来的值
         if (node instanceof Application) {
-            //分别左右树位移，by和from的值都是原来的值
             return new Application(
                     shift(by, ((Application) node).lhs, from),
                     shift(by, ((Application) node).rhs, from)
             );
-        }// 新的body等于旧node.body位移by（from得+1）
+        }
+        // 新的body等于旧node.body位移by（from得+1）
         else if (node instanceof Abstraction) {
             return new Abstraction(
                     ((Abstraction) node).param,
                     shift(by, ((Abstraction) node).body, from + 1)
             );
-        } //新的identifier的De Brujjn index值如果大于等于from则加by，否则加0（超出内层的范围的外层变量才要shift by位）.
+        }
+        //新的identifier的De Brujjn index值如果大于等于from则加by，否则加0
+        // 超出内层的范围的外层变量才要shift by位，也就是德布鲁因值加上by
         else if (node instanceof Identifier) {
             int val = Integer.valueOf(((Identifier) node).value);
             return new Identifier(((Identifier) node).name, String.valueOf(val + ((val < from) ? 0 : by)));
