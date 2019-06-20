@@ -5,11 +5,13 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/cn/seecoder" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cn" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/305-lambda-interpreter/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/305-lambda-interpreter/src/test/java" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/305-lambda-interpreter" />
+      <excludeFolder url="file://$MODULE_DIR$/305-lambda-interpreter/target" />
     </content>
+    <content url="file://$MODULE_DIR$/305-lambda-interpreter/src/main" />
+    <content url="file://$MODULE_DIR$/305-lambda-interpreter/src/test" />
+    <content url="file://$MODULE_DIR$/305-lambda-interpreter/target" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

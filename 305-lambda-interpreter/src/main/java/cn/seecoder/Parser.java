@@ -24,7 +24,11 @@ public class Parser {
                 if (lexer.getNextToken(TokenType.DOT)) {
                     ctx.add(0, param);
                     AST aTerm = term(ctx);
-                    String valOfParam = String.valueOf(ctx.indexOf(param));        //param的层数，也就是当前的德布鲁因值
+                    int val = ctx.indexOf(param);
+//                    if (val == -1) {
+//                        throw new Error("Free variation can't be evaluated.");
+//                    }
+                    String valOfParam = String.valueOf(val);        //param的层数，也就是当前的德布鲁因值
                     ctx.remove(ctx.indexOf(param));
                     return new Abstraction(new Identifier(param, valOfParam), aTerm);
                 }

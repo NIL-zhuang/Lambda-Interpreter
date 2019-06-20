@@ -11,6 +11,7 @@ public class Lexer {
      * 构造第一个Token，相当于head
      */
     public Lexer(String s) {
+        testBracket(s);         //检测输入的字符串括号匹配
         this.source = s;
         this.index = 0;
         this.token = new Token();
@@ -96,6 +97,23 @@ public class Lexer {
             return true;
         }
         return false;
+    }
+
+    private void testBracket(String s) {
+        int index = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                index++;
+            } else if (s.charAt(i) == ')') {
+                index--;
+            }
+            if (index < 0) {
+                throw new Error("Bracket doesn't match");
+            }
+        }
+        if (index != 0) {
+            throw new Error("Bracket doesn't match");
+        }
     }
 
     public static void main(String[] args) {

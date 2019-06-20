@@ -48,8 +48,8 @@ public class Interpreter {
      */
     private AST evalAST(AST ast) {
         while (!isValue(ast)) {
-//            ast.printTree(ast, ast.depth);
-//            System.out.println();
+            ast.printTree(ast, ast.depth);
+            System.out.println();
             if (ast instanceof Application) {
                 if (isValue(((Application) ast).lhs) && isValue(((Application) ast).rhs)) {
                     ast = substitute(((Abstraction) ((Application) ast).lhs).body, ((Application) ast).rhs);
@@ -83,7 +83,6 @@ public class Interpreter {
      * @return AST
      */
     private AST subst(AST node, AST value, int depth) {
-        System.out.println();
         if (node instanceof Application) {
             //左右两枝都替换
             return new Application(
@@ -226,6 +225,6 @@ public class Interpreter {
         Parser parser = new Parser(lexer);
         Interpreter interpreter = new Interpreter(parser);
         AST result = interpreter.eval();
-        System.out.println(result.toString());
+        System.out.println(result.toStr());
     }
 }

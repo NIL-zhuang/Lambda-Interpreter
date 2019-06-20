@@ -44,11 +44,9 @@ public class InterpreterTest {
     static String app(String func, String x) {
         return "(" + func + x + ")";
     }
-
     static String app(String func, String x, String y) {
         return "(" + "(" + func + x + ")" + y + ")";
     }
-
     static String app(String func, String cond, String x, String y) {
         return "(" + func + cond + x + y + ")";
     }
@@ -423,7 +421,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test4_PLUS_testParser() {
         AST ast = testParser(4);
@@ -433,7 +430,7 @@ public class InterpreterTest {
     @Test
     public void test4_PLUS_testInterpreter() {
         AST result = testInterpreter(4);
-        assertEquals("\\.\\.(1 0)", result.toString());
+        assertEquals("\\.\\.(1 0)",result.toString());
     }
 
     @Test
@@ -590,7 +587,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test5_PLUS_testParser() {
         AST ast = testParser(5);
@@ -600,7 +596,7 @@ public class InterpreterTest {
     @Test
     public void test5_PLUS_testInterpreter() {
         AST result = testInterpreter(5);
-        assertEquals("\\.\\.(1 (1 (1 (1 (1 0)))))", result.toString());
+        assertEquals("\\.\\.(1 (1 (1 (1 (1 0)))))",result.toString());
     }
 
     @Test
@@ -717,7 +713,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test6_POW_testParser() {
         AST ast = testParser(6);
@@ -727,7 +722,7 @@ public class InterpreterTest {
     @Test
     public void test6_POW_testInterpreter() {
         AST result = testInterpreter(6);
-        assertEquals("\\.\\.(1 (1 (1 (1 0))))", result.toString());
+        assertEquals("\\.\\.(1 (1 (1 (1 0))))",result.toString());
     }
 
     @Test
@@ -803,7 +798,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test7_PRED_testParser() {
         AST ast = testParser(7);
@@ -813,7 +807,7 @@ public class InterpreterTest {
     @Test
     public void test7_PRED_testInterpreter() {
         AST result = testInterpreter(7);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -908,7 +902,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test8_PRED_testParser() {
         AST ast = testParser(8);
@@ -918,7 +911,7 @@ public class InterpreterTest {
     @Test
     public void test8_PRED_testInterpreter() {
         AST result = testInterpreter(8);
-        assertEquals("\\.\\.(1 0)", result.toString());
+        assertEquals("\\.\\.(1 0)",result.toString());
     }
 
     @Test
@@ -1110,7 +1103,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test9_SUB_testParser() {
         AST ast = testParser(9);
@@ -1120,7 +1112,7 @@ public class InterpreterTest {
     @Test
     public void test9_SUB_testInterpreter() {
         AST result = testInterpreter(9);
-        assertEquals("\\.\\.(1 (1 0))", result.toString());
+        assertEquals("\\.\\.(1 (1 0))",result.toString());
     }
 
     @Test
@@ -1162,7 +1154,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test10_AND_testParser() {
         AST ast = testParser(10);
@@ -1172,7 +1163,7 @@ public class InterpreterTest {
     @Test
     public void test10_AND_testInterpreter() {
         AST result = testInterpreter(10);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -1214,7 +1205,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test11_AND_testParser() {
         AST ast = testParser(11);
@@ -1224,7 +1214,7 @@ public class InterpreterTest {
     @Test
     public void test11_AND_testInterpreter() {
         AST result = testInterpreter(11);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -1266,7 +1256,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test12_AND_testParser() {
         AST ast = testParser(12);
@@ -1276,7 +1265,7 @@ public class InterpreterTest {
     @Test
     public void test12_AND_testInterpreter() {
         AST result = testInterpreter(12);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -1318,7 +1307,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test13_OR_testParser() {
         AST ast = testParser(13);
@@ -1328,7 +1316,7 @@ public class InterpreterTest {
     @Test
     public void test13_OR_testInterpreter() {
         AST result = testInterpreter(13);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -1370,7 +1358,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test14_OR_testParser() {
         AST ast = testParser(14);
@@ -1380,7 +1367,7 @@ public class InterpreterTest {
     @Test
     public void test14_OR_testInterpreter() {
         AST result = testInterpreter(14);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -1422,7 +1409,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test15_OR_testParser() {
         AST ast = testParser(15);
@@ -1432,7 +1418,7 @@ public class InterpreterTest {
     @Test
     public void test15_OR_testInterpreter() {
         AST result = testInterpreter(15);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -1466,7 +1452,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test16_NOT_testParser() {
         AST ast = testParser(16);
@@ -1476,7 +1461,7 @@ public class InterpreterTest {
     @Test
     public void test16_NOT_testInterpreter() {
         AST result = testInterpreter(16);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -1510,7 +1495,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test17_NOT_testParser() {
         AST ast = testParser(17);
@@ -1520,7 +1504,7 @@ public class InterpreterTest {
     @Test
     public void test17_NOT_testInterpreter() {
         AST result = testInterpreter(17);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -1572,7 +1556,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test18_IF_testParser() {
         AST ast = testParser(18);
@@ -1582,7 +1565,7 @@ public class InterpreterTest {
     @Test
     public void test18_IF_testInterpreter() {
         AST result = testInterpreter(18);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -1634,7 +1617,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test19_IF_testParser() {
         AST ast = testParser(19);
@@ -1644,7 +1626,7 @@ public class InterpreterTest {
     @Test
     public void test19_IF_testInterpreter() {
         AST result = testInterpreter(19);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -1739,7 +1721,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test20_IF_OR_testParser() {
         AST ast = testParser(20);
@@ -1749,7 +1730,7 @@ public class InterpreterTest {
     @Test
     public void test20_IF_OR_testInterpreter() {
         AST result = testInterpreter(20);
-        assertEquals("\\.\\.(1 0)", result.toString());
+        assertEquals("\\.\\.(1 0)",result.toString());
     }
 
     @Test
@@ -1958,7 +1939,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test21_IF_AND_testParser() {
         AST ast = testParser(21);
@@ -1968,7 +1948,7 @@ public class InterpreterTest {
     @Test
     public void test21_IF_AND_testInterpreter() {
         AST result = testInterpreter(21);
-        assertEquals("\\.\\.(1 (1 (1 0)))", result.toString());
+        assertEquals("\\.\\.(1 (1 (1 0)))",result.toString());
     }
 
     @Test
@@ -2017,7 +1997,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test22_ISZERO_testParser() {
         AST ast = testParser(22);
@@ -2027,7 +2006,7 @@ public class InterpreterTest {
     @Test
     public void test22_ISZERO_testInterpreter() {
         AST result = testInterpreter(22);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -2095,7 +2074,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test23_ISZERO_testParser() {
         AST ast = testParser(23);
@@ -2105,7 +2083,7 @@ public class InterpreterTest {
     @Test
     public void test23_ISZERO_testInterpreter() {
         AST result = testInterpreter(23);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -2319,7 +2297,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test24_LEQ_testParser() {
         AST ast = testParser(24);
@@ -2329,7 +2306,7 @@ public class InterpreterTest {
     @Test
     public void test24_LEQ_testInterpreter() {
         AST result = testInterpreter(24);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -2543,7 +2520,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test25_LEQ_testParser() {
         AST ast = testParser(25);
@@ -2553,7 +2529,7 @@ public class InterpreterTest {
     @Test
     public void test25_LEQ_testInterpreter() {
         AST result = testInterpreter(25);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -2901,7 +2877,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test26_EQ_testParser() {
         AST ast = testParser(26);
@@ -2911,7 +2886,7 @@ public class InterpreterTest {
     @Test
     public void test26_EQ_testInterpreter() {
         AST result = testInterpreter(26);
-        assertEquals("\\.\\.0", result.toString());
+        assertEquals("\\.\\.0",result.toString());
     }
 
     @Test
@@ -3335,7 +3310,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test27_EQ_testParser() {
         AST ast = testParser(27);
@@ -3345,7 +3319,7 @@ public class InterpreterTest {
     @Test
     public void test27_EQ_testInterpreter() {
         AST result = testInterpreter(27);
-        assertEquals("\\.\\.1", result.toString());
+        assertEquals("\\.\\.1",result.toString());
     }
 
     @Test
@@ -3549,7 +3523,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test28_MAX_testParser() {
         AST ast = testParser(28);
@@ -3559,7 +3532,7 @@ public class InterpreterTest {
     @Test
     public void test28_MAX_testInterpreter() {
         AST result = testInterpreter(28);
-        assertEquals("\\.\\.(1 (1 0))", result.toString());
+        assertEquals("\\.\\.(1 (1 0))",result.toString());
     }
 
     @Test
@@ -3820,7 +3793,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test29_MAX_testParser() {
         AST ast = testParser(29);
@@ -3830,7 +3802,7 @@ public class InterpreterTest {
     @Test
     public void test29_MAX_testInterpreter() {
         AST result = testInterpreter(29);
-        assertEquals("\\.\\.(1 (1 (1 (1 0))))", result.toString());
+        assertEquals("\\.\\.(1 (1 (1 (1 0))))",result.toString());
     }
 
     @Test
@@ -4034,7 +4006,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test30_MIN_testParser() {
         AST ast = testParser(30);
@@ -4044,7 +4015,7 @@ public class InterpreterTest {
     @Test
     public void test30_MIN_testInterpreter() {
         AST result = testInterpreter(30);
-        assertEquals("\\.\\.(1 0)", result.toString());
+        assertEquals("\\.\\.(1 0)",result.toString());
     }
 
     @Test
@@ -4305,7 +4276,6 @@ public class InterpreterTest {
                         "RPAREN" + lineBreak +
                         "EOF" + lineBreak, bytes.toString());
     }
-
     @Test
     public void test31_MIN_testParser() {
         AST ast = testParser(31);
@@ -4315,6 +4285,6 @@ public class InterpreterTest {
     @Test
     public void test31_MIN_testInterpreter() {
         AST result = testInterpreter(31);
-        assertEquals("\\.\\.(1 (1 0))", result.toString());
+        assertEquals("\\.\\.(1 (1 0))",result.toString());
     }
 }
